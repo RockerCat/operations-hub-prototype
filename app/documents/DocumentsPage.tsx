@@ -552,7 +552,7 @@ export default function DocumentsPage({ approved }: { approved?: boolean }) {
       <main className="max-w-screen-xl mx-auto px-6 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-slate-400 mb-6">
-          <Link href="/" className="hover:text-slate-700 transition-colors">
+          <Link href="/dashboard" className="hover:text-slate-700 transition-colors">
             Dashboard
           </Link>
           <span>/</span>

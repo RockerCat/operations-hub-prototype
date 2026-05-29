@@ -67,7 +67,7 @@ export const workQueue: WorkQueueItem[] = [
   { id: "ready-documents", label: "Ready for Documents", count: 8, color: "blue", href: "/documents" },
   { id: "awaiting-payment", label: "Awaiting Payment", count: 5, color: "orange", href: "/orders/review" },
   { id: "pod-pending", label: "POD Signature Pending", count: 3, color: "purple", href: "/documents" },
-  { id: "completed-today", label: "Completed Today", count: 42, color: "green", href: "/" },
+  { id: "completed-today", label: "Completed Today", count: 42, color: "green", href: "/dashboard" },
 ]
 
 export const orders: Order[] = [

@@ -1133,7 +1133,7 @@ export default function NewOrderForm() {
       <main className="max-w-screen-xl mx-auto px-6 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-slate-400 mb-6">
-          <Link href="/" className="hover:text-slate-700 transition-colors">
+          <Link href="/dashboard" className="hover:text-slate-700 transition-colors">
             Dashboard
           </Link>
           <span>/</span>
@@ -1177,7 +1177,7 @@ export default function NewOrderForm() {
             {/* Form actions */}
             <div className="flex items-center justify-between pt-2 pb-10">
               <Link
-                href="/"
+                href="/dashboard"
                 className="text-xs text-slate-400 hover:text-slate-700 transition-colors"
               >
                 Discard changes

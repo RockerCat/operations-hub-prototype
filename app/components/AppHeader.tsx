@@ -3,7 +3,7 @@ import Link from "next/link"
 export type ActivePage = "dashboard" | "orders" | "catalog" | "documents"
 
 const NAV: { label: string; href: string; id: ActivePage }[] = [
-  { label: "Dashboard", href: "/", id: "dashboard" },
+  { label: "Dashboard", href: "/dashboard", id: "dashboard" },
   { label: "Orders", href: "/orders/new", id: "orders" },
   { label: "Catalog", href: "/catalog", id: "catalog" },
   { label: "Documents", href: "/documents", id: "documents" },
