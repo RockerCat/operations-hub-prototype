@@ -168,6 +168,66 @@ const FUTURE_AI = [
   "Recommend fulfillment routing by region",
 ]
 
+type ImpactDir = "up" | "down"
+
+const AI_OPPORTUNITIES: {
+  id: number
+  title: string
+  currentProcess: string
+  aiOpportunity: string
+  impact: string
+  impactDir: ImpactDir
+}[] = [
+  {
+    id: 1,
+    title: "Vendor Recommendation Engine",
+    currentProcess:
+      "Operations staff manually compare vendors based on pricing, margin, and fulfillment performance for each order.",
+    aiOpportunity:
+      "Recommend the optimal vendor using historical profitability, fulfillment speed, inventory availability, and regional performance data.",
+    impact: "Reduce vendor selection time by 60%",
+    impactDir: "down",
+  },
+  {
+    id: 2,
+    title: "Prior Authorization Prediction",
+    currentProcess:
+      "Teams manually determine whether insurance prior authorization may be required before order submission.",
+    aiOpportunity:
+      "Predict authorization requirements before order submission using historical approval patterns and insurance plan data.",
+    impact: "Reduce processing delays and rework",
+    impactDir: "down",
+  },
+  {
+    id: 3,
+    title: "Pricing Anomaly Detection",
+    currentProcess:
+      "Managers manually identify unusual margins or pricing inconsistencies during the order approval review.",
+    aiOpportunity:
+      "Automatically detect abnormal pricing behavior, low-margin orders, or potential billing errors before they reach the approval queue.",
+    impact: "Reduce approval escalations",
+    impactDir: "down",
+  },
+  {
+    id: 4,
+    title: "Fulfillment Routing Optimization",
+    currentProcess:
+      "Fulfillment teams manually select fulfillment paths and vendor assignments for each approved order.",
+    aiOpportunity:
+      "Recommend optimal fulfillment routing based on geography, inventory levels, vendor performance history, and delivery SLAs.",
+    impact: "Improve delivery speed and operational scalability",
+    impactDir: "up",
+  },
+]
+
+const IMPACT_METRICS: { dir: ImpactDir; value: string | null; label: string }[] = [
+  { dir: "down", value: "30%", label: "Order Review Time" },
+  { dir: "down", value: "20%", label: "Processing Delays" },
+  { dir: "down", value: "15%", label: "Fulfillment Turnaround Time" },
+  { dir: "up", value: null, label: "Margin Consistency" },
+  { dir: "up", value: null, label: "Operational Scalability" },
+]
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function fmt(n: number) {
@@ -490,41 +550,134 @@ function PricingLogic() {
   )
 }
 
-// ─── Sidebar: Future AI Opportunities ────────────────────────────────────────
+// ─── AI Opportunity Card ──────────────────────────────────────────────────────
 
-function FutureAI() {
+function AIOpportunityCard({
+  opp,
+}: {
+  opp: (typeof AI_OPPORTUNITIES)[number]
+}) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-      <div className="px-5 py-4 border-b border-gray-100 flex items-start justify-between">
-        <div>
-          <h3 className="text-sm font-semibold text-slate-900">
-            Future AI Opportunities
-          </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Identified workflow enhancements
-          </p>
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4">
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <h4 className="text-sm font-semibold text-slate-900 leading-snug">
+            {opp.title}
+          </h4>
+          <span className="text-xs font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded shrink-0 mt-px">
+            Future
+          </span>
         </div>
-        <span className="text-xs font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded shrink-0 mt-0.5">
-          Roadmap
-        </span>
+        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+          Current Process
+        </p>
+        <p className="text-xs text-slate-500 leading-relaxed">
+          {opp.currentProcess}
+        </p>
       </div>
-      <div className="px-5 py-4 space-y-3">
-        {FUTURE_AI.map((item, i) => (
-          <div key={i} className="flex items-start gap-2.5">
-            <div className="h-5 w-5 rounded-full border border-gray-200 bg-white flex items-center justify-center shrink-0 mt-px">
-              <div className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-            </div>
-            <p className="text-xs text-slate-400 leading-snug">{item}</p>
-          </div>
-        ))}
+
+      {/* AI Opportunity — visually distinguished */}
+      <div className="mx-5 mb-4 rounded-lg bg-slate-50 px-4 py-3">
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
+          AI Opportunity
+        </p>
+        <p className="text-xs text-slate-700 leading-relaxed">
+          {opp.aiOpportunity}
+        </p>
       </div>
-      <div className="px-5 py-3 border-t border-gray-100 bg-gray-50/50">
-        <p className="text-xs text-slate-400 leading-relaxed">
-          These enhancements are identified but not part of the current
-          operational workflow.
+
+      {/* Expected Impact */}
+      <div className="px-5 pb-5 mt-auto pt-3 border-t border-gray-100">
+        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+          Expected Impact
+        </p>
+        <p
+          className={`text-xs font-semibold ${
+            opp.impactDir === "down" ? "text-emerald-600" : "text-blue-600"
+          }`}
+        >
+          {opp.impactDir === "down" ? "↓" : "↑"} {opp.impact}
         </p>
       </div>
     </div>
+  )
+}
+
+// ─── Executive Summary ────────────────────────────────────────────────────────
+
+function ExecutiveSummary() {
+  return (
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-100">
+        <h3 className="text-sm font-semibold text-slate-900">
+          Estimated Business Impact
+        </h3>
+        <p className="text-xs text-slate-400 mt-0.5">
+          Projected outcomes based on comparable operational workflow
+          improvements.
+        </p>
+      </div>
+      <div className="px-6 py-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-2.5 mb-5">
+          {IMPACT_METRICS.map((m, i) => (
+            <div key={i} className="flex items-center gap-3">
+              <span
+                className={`text-base font-bold w-12 shrink-0 tabular-nums ${
+                  m.dir === "down" ? "text-emerald-600" : "text-blue-600"
+                }`}
+              >
+                {m.dir === "down" ? "↓" : "↑"}
+                {m.value ? ` ${m.value}` : ""}
+              </span>
+              <span className="text-xs font-medium text-slate-600">
+                {m.label}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="border-t border-gray-100 pt-4">
+          <p className="text-xs text-slate-400 leading-relaxed">
+            These opportunities are not part of the current MVP and represent
+            future AI-enabled workflow enhancements identified through process
+            analysis.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── AI Roadmap Section ───────────────────────────────────────────────────────
+
+function AIRoadmapSection() {
+  return (
+    <section className="mt-10 pb-10">
+      {/* Section header */}
+      <div className="flex items-start justify-between gap-4 mb-5">
+        <div>
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">
+            AI Opportunities Roadmap
+          </p>
+          <p className="text-sm text-slate-500 max-w-2xl">
+            Potential workflow enhancements identified during process analysis.
+          </p>
+        </div>
+        <span className="text-xs font-semibold bg-slate-100 text-slate-500 px-2.5 py-1 rounded-lg shrink-0">
+          Roadmap
+        </span>
+      </div>
+
+      {/* 2 × 2 opportunity cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+        {AI_OPPORTUNITIES.map((opp) => (
+          <AIOpportunityCard key={opp.id} opp={opp} />
+        ))}
+      </div>
+
+      {/* Executive Summary */}
+      <ExecutiveSummary />
+    </section>
   )
 }
 
@@ -569,9 +722,11 @@ export default function CatalogPage() {
           <div className="flex flex-col gap-5">
             <OperationalRules />
             <PricingLogic />
-            <FutureAI />
           </div>
         </div>
+
+        {/* AI Opportunities Roadmap — full-width below the grid */}
+        <AIRoadmapSection />
       </main>
     </div>
   )
