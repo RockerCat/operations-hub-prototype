@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useRef } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
+import AppHeader from "@/app/components/AppHeader"
 
 // ─── Catalog & option lists ───────────────────────────────────────────────────
 
@@ -1072,109 +1074,11 @@ function OperationalChecks({
   )
 }
 
-// ─── Page Header (shared across pages) ───────────────────────────────────────
-
-function AppHeader() {
-  return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
-      <div className="max-w-screen-xl mx-auto px-6">
-        <div className="flex items-center justify-between h-14">
-          <div className="flex items-center gap-3">
-            <div className="h-7 w-7 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0">
-              <svg
-                className="h-3.5 w-3.5 text-white"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden="true"
-              >
-                <rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" />
-                <rect
-                  x="9"
-                  y="1"
-                  width="6"
-                  height="6"
-                  rx="1"
-                  fill="currentColor"
-                  opacity="0.6"
-                />
-                <rect
-                  x="1"
-                  y="9"
-                  width="6"
-                  height="6"
-                  rx="1"
-                  fill="currentColor"
-                  opacity="0.6"
-                />
-                <rect
-                  x="9"
-                  y="9"
-                  width="6"
-                  height="6"
-                  rx="1"
-                  fill="currentColor"
-                  opacity="0.3"
-                />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-slate-900 leading-none">
-                Operations Hub
-              </p>
-              <p className="text-xs text-slate-400 mt-0.5 leading-none">
-                Medical Supply Operations Platform
-              </p>
-            </div>
-          </div>
-
-          <nav className="hidden md:flex items-center gap-1">
-            <Link
-              href="/"
-              className="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-900 transition-colors rounded-lg hover:bg-gray-50"
-            >
-              Dashboard
-            </Link>
-            <span className="px-3 py-1.5 rounded-lg bg-gray-100 text-slate-700 font-medium text-xs">
-              Orders
-            </span>
-            <span className="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-900 cursor-pointer transition-colors rounded-lg hover:bg-gray-50">
-              Vendors
-            </span>
-            <span className="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-900 cursor-pointer transition-colors rounded-lg hover:bg-gray-50">
-              Documents
-            </span>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <button className="text-xs font-medium text-slate-600 px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-              Export Orders
-            </button>
-            <button className="text-xs font-medium text-white px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-700 transition-colors flex items-center gap-1.5">
-              <svg
-                className="h-3 w-3"
-                viewBox="0 0 12 12"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 1v10M1 6h10"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-              New Order
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-  )
-}
-
 // ─── Root: NewOrderForm ───────────────────────────────────────────────────────
 
 export default function NewOrderForm() {
+  const router = useRouter()
+  const [submitting, setSubmitting] = useState(false)
   const [form, setForm] = useState<FormState>({
     patientName: "Maria Rodriguez",
     dob: "1978-03-15",
@@ -1217,9 +1121,14 @@ export default function NewOrderForm() {
   const updateQty = (key: number, qty: number) =>
     setProducts((prev) => prev.map((p) => (p.key === key ? { ...p, qty } : p)))
 
+  const handleSubmit = () => {
+    setSubmitting(true)
+    setTimeout(() => router.push("/orders/review"), 800)
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <AppHeader />
+      <AppHeader activePage="orders" />
 
       <main className="max-w-screen-xl mx-auto px-6 py-8">
         {/* Breadcrumb */}
@@ -1267,29 +1176,40 @@ export default function NewOrderForm() {
 
             {/* Form actions */}
             <div className="flex items-center justify-between pt-2 pb-10">
-              <button className="text-xs text-slate-400 hover:text-slate-700 transition-colors">
+              <Link
+                href="/"
+                className="text-xs text-slate-400 hover:text-slate-700 transition-colors"
+              >
                 Discard changes
-              </button>
+              </Link>
               <div className="flex items-center gap-3">
                 <button className="text-sm font-medium text-slate-700 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
                   Save Draft
                 </button>
-                <button className="text-sm font-medium text-white px-5 py-2 rounded-lg bg-slate-900 hover:bg-slate-700 transition-colors flex items-center gap-2">
-                  Submit for Approval
-                  <svg
-                    className="h-3.5 w-3.5"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M3 7h8M8 4l3 3-3 3"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                <button
+                  onClick={handleSubmit}
+                  disabled={submitting}
+                  className={`text-sm font-medium text-white px-5 py-2 rounded-lg bg-slate-900 transition-colors flex items-center gap-2 ${
+                    submitting ? "opacity-75 cursor-not-allowed" : "hover:bg-slate-700"
+                  }`}
+                >
+                  {submitting ? "Submitting…" : "Submit for Approval"}
+                  {!submitting && (
+                    <svg
+                      className="h-3.5 w-3.5"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3 7h8M8 4l3 3-3 3"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>

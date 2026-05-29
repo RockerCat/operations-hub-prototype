@@ -1,9 +1,11 @@
+import Link from "next/link"
 import type { QueueColor } from "@/app/lib/mockData"
 
 interface WorkQueueCardProps {
   label: string
   count: number
   color: QueueColor
+  href?: string
 }
 
 const colorStyles: Record<
@@ -42,26 +44,20 @@ const colorStyles: Record<
   },
 }
 
-export default function WorkQueueCard({ label, count, color }: WorkQueueCardProps) {
+export default function WorkQueueCard({ label, count, color, href }: WorkQueueCardProps) {
   const styles = colorStyles[color]
-  return (
-    <div
-      className={`relative bg-white rounded-xl border border-gray-100 shadow-sm p-5 cursor-pointer transition-all duration-150 hover:shadow-md ${styles.bg}`}
-    >
-      <div
-        className={`absolute inset-x-0 top-0 h-0.5 rounded-t-xl ${styles.bar}`}
-      />
-      <p className="mt-1 text-xs font-medium text-slate-400 leading-snug">
-        {label}
-      </p>
+  const cls = `relative block bg-white rounded-xl border border-gray-100 shadow-sm p-5 cursor-pointer transition-all duration-150 hover:shadow-md ${styles.bg}`
+
+  const inner = (
+    <>
+      <div className={`absolute inset-x-0 top-0 h-0.5 rounded-t-xl ${styles.bar}`} />
+      <p className="mt-1 text-xs font-medium text-slate-400 leading-snug">{label}</p>
       <p className={`mt-3 text-4xl font-semibold tracking-tight ${styles.count}`}>
         {count}
       </p>
       <p className="text-xs text-slate-400 mt-0.5">Orders</p>
       <div className="mt-5 flex items-center justify-between">
-        <span className={`text-xs font-medium ${styles.link}`}>
-          View queue
-        </span>
+        <span className={`text-xs font-medium ${styles.link}`}>View queue</span>
         <svg
           className={`h-3.5 w-3.5 ${styles.link}`}
           viewBox="0 0 16 16"
@@ -77,6 +73,15 @@ export default function WorkQueueCard({ label, count, color }: WorkQueueCardProp
           />
         </svg>
       </div>
-    </div>
+    </>
   )
+
+  if (href) {
+    return (
+      <Link href={href} className={cls}>
+        {inner}
+      </Link>
+    )
+  }
+  return <div className={cls}>{inner}</div>
 }

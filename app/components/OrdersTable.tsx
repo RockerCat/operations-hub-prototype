@@ -1,3 +1,4 @@
+import Link from "next/link"
 import StatusBadge from "@/app/components/StatusBadge"
 import type { Order } from "@/app/lib/mockData"
 
@@ -27,13 +28,19 @@ function ActionCell({ status }: { status: Order["status"] }) {
   const canReview = status === "Pending Approval"
   return (
     <div className="flex items-center gap-3">
-      <button className="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors">
+      <Link
+        href="/orders/review"
+        className="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
+      >
         View
-      </button>
+      </Link>
       {canReview && (
-        <button className="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors">
+        <Link
+          href="/orders/review"
+          className="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors"
+        >
           Review
-        </button>
+        </Link>
       )}
     </div>
   )

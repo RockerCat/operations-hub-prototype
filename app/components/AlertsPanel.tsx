@@ -1,3 +1,4 @@
+import Link from "next/link"
 import type { Alert, AlertSeverity, AlertCategory } from "@/app/lib/mockData"
 
 const severityStyles: Record<
@@ -48,6 +49,14 @@ function AlertItem({ alert }: { alert: Alert }) {
         <p className="mt-0.5 text-xs text-slate-500 leading-relaxed">
           {alert.description}
         </p>
+        {alert.severity !== "low" && (
+          <Link
+            href="/orders/review"
+            className="mt-1.5 inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            View order →
+          </Link>
+        )}
       </div>
     </div>
   )
@@ -78,9 +87,12 @@ export default function AlertsPanel({ alerts }: { alerts: Alert[] }) {
         ))}
       </div>
       <div className="px-5 py-3 border-t border-gray-100 bg-gray-50/50">
-        <button className="text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors">
+        <Link
+          href="/orders/review"
+          className="text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors"
+        >
           View all alerts →
-        </button>
+        </Link>
       </div>
     </div>
   )

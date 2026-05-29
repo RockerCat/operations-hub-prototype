@@ -52,6 +52,7 @@ export interface WorkQueueItem {
   label: string
   count: number
   color: QueueColor
+  href?: string
 }
 
 export interface Metric {
@@ -62,11 +63,11 @@ export interface Metric {
 }
 
 export const workQueue: WorkQueueItem[] = [
-  { id: "pending-approval", label: "Pending Approval", count: 12, color: "amber" },
-  { id: "ready-documents", label: "Ready for Documents", count: 8, color: "blue" },
-  { id: "awaiting-payment", label: "Awaiting Payment", count: 5, color: "orange" },
-  { id: "pod-pending", label: "POD Signature Pending", count: 3, color: "purple" },
-  { id: "completed-today", label: "Completed Today", count: 42, color: "green" },
+  { id: "pending-approval", label: "Pending Approval", count: 12, color: "amber", href: "/orders/review" },
+  { id: "ready-documents", label: "Ready for Documents", count: 8, color: "blue", href: "/documents" },
+  { id: "awaiting-payment", label: "Awaiting Payment", count: 5, color: "orange", href: "/orders/review" },
+  { id: "pod-pending", label: "POD Signature Pending", count: 3, color: "purple", href: "/documents" },
+  { id: "completed-today", label: "Completed Today", count: 42, color: "green", href: "/" },
 ]
 
 export const orders: Order[] = [

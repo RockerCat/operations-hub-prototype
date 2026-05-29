@@ -1,3 +1,4 @@
+import Link from "next/link"
 import type { AttentionOrder, AttentionSeverity } from "@/app/lib/mockData"
 
 const severityStyles: Record<
@@ -57,11 +58,12 @@ function AttentionCard({ order }: { order: AttentionOrder }) {
           <p className="text-xs text-slate-600 leading-relaxed">{order.blocker}</p>
         </div>
       </div>
-      <button
-        className={`w-full text-xs font-semibold px-3 py-2 rounded-lg transition-colors ${styles.button}`}
+      <Link
+        href="/orders/review"
+        className={`w-full text-xs font-semibold px-3 py-2 rounded-lg transition-colors text-center block ${styles.button}`}
       >
         {order.action} →
-      </button>
+      </Link>
     </div>
   )
 }
