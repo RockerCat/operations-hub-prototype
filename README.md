@@ -47,7 +47,10 @@ The MVP focuses on:
 ## Prototype
 
 Live Demo:
-https://...
+https://operations-hub-prototype.vercel.app
+
+Video Walkthrough:
+https://youtu.be/YzXhpGQLMwE
 
 ## Technology
 
