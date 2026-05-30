@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Operations Hub
 
-## Getting Started
+Operations Hub is a Product Management case study focused on modernizing a spreadsheet-driven medical supply operations workflow.
 
-First, run the development server:
+## Objective
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Replace fragmented spreadsheet-based processes with a centralized operational platform that improves visibility, approval workflows, document generation, and operational consistency.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Problem Statement
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Medical supply providers often rely on spreadsheets, email chains, and manual reviews to manage patient orders. This creates:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Approval delays
+- Pricing inconsistencies
+- Manual document preparation
+- Limited operational visibility
+- Scalability challenges
 
-## Learn More
+## Solution
 
-To learn more about Next.js, take a look at the following resources:
+The prototype demonstrates a workflow modernization approach through:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Operations Dashboard
+- Order Management
+- Approval Queue
+- Order Review
+- Documents Center
+- Product & Vendor Catalog
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Product Strategy
 
-## Deploy on Vercel
+The MVP focuses on:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Must Have
+- Operations Dashboard
+- Order Workflow
+- Approval Process
+- Documents Center
+- Product & Vendor Catalog
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Future AI Opportunities
+- Vendor Recommendation Engine
+- Prior Authorization Prediction
+- Pricing Anomaly Detection
+- Fulfillment Routing Optimization
+
+## Prototype
+
+Live Demo:
+https://...
+
+## Technology
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+
+## Author
+
+Alex Sosa
