@@ -58,7 +58,11 @@ export default function AppHeader({ activePage }: { activePage: ActivePage }) {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <button className="text-xs font-medium text-slate-600 px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+            <button
+              disabled
+              title="Export functionality not included in MVP."
+              className="text-xs font-medium text-slate-400 px-3 py-1.5 rounded-lg border border-gray-200 opacity-60 cursor-not-allowed"
+            >
               Export Orders
             </button>
             <Link

@@ -279,6 +279,16 @@ function ActionCell({ status }: { status: OrderStatus }) {
       </Link>
     )
   }
+  if (status === "Completed") {
+    return (
+      <Link
+        href="/orders/review"
+        className="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
+      >
+        View
+      </Link>
+    )
+  }
   return (
     <button className="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors">
       View
